@@ -1,0 +1,6 @@
+python-telegram-bot==21.4
+aiohttp==3.9.5
+python-dotenv==1.0.1
+backoff==2.2.1
+aiosqlite==0.20.0
+qrcode[pil]==7.4.2

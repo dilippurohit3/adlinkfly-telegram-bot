@@ -1,0 +1,24 @@
+[Unit]
+Description=AdLinkFly Telegram URL Shortener Bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=adlinkfly-bot
+Group=adlinkfly-bot
+WorkingDirectory=/opt/adlinkfly-bot
+Environment=PYTHONUNBUFFERED=1
+Environment=DOTENV_CONFIG_PATH=/opt/adlinkfly-bot/.env
+ExecStart=/opt/adlinkfly-bot/.venv/bin/python -m src.bot
+Restart=on-failure
+RestartSec=5s
+
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target
