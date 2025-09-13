@@ -295,7 +295,14 @@ async def main_async() -> None:
 	await application.start()
 	try:
 		await application.updater.start_polling(drop_pending_updates=True)
-		await application.updater.idle()
+		# Keep running until interrupted
+		import signal
+		stop_event = asyncio.Event()
+		def signal_handler():
+			stop_event.set()
+		for sig in (signal.SIGTERM, signal.SIGINT):
+			asyncio.get_event_loop().add_signal_handler(sig, signal_handler)
+		await stop_event.wait()
 	finally:
 		await application.stop()
 		await application.shutdown()
